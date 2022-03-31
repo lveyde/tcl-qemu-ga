@@ -9,10 +9,10 @@ source "qemu" "qemu" {
     net_device = "virtio-net"
     disk_interface = "virtio"
     boot_wait = "500ms"
-    headless = true
+    headless = false
     communicator = "none"
     boot_command = [
-        "<enter><wait5>",
+        "<enter><wait15>",
         "tce-load -wi acpid<enter>",
         "/usr/local/etc/init.d/acpid start<enter>",
         "tce-load -wi tc-install<enter>",
@@ -31,7 +31,7 @@ source "qemu" "qemu" {
         "<enter>",
         "sudo poweroff<enter>",
     ]
-    boot_key_interval = "10ms"
+    boot_key_interval = "50ms"
     boot_keygroup_interval = "2s"
 }
 

@@ -18,37 +18,37 @@ source "qemu" "qemu" {
         "tce-load -wi tc-install<enter>",
         # Start installer
         "sudo tc-install.sh<enter>",
-        "<wait10>",
+        "<wait30>",
         # Install from CD
-        "c<enter>",
+        "c<wait><enter><wait>",
         # Frugal
-        "f<enter><wait2>",
+        "f<wait><enter><wait>",
         # Whole disk
-        "1<enter>",
+        "1<wait><enter><wait>",
         # VDA
-        "2<enter>",
+        "2<wait><enter><wait>",
         # Bootloader
-        "y<enter>",
+        "y<wait><enter><wait>",
         # Extensions
-        "<enter>",
+        "<wait><enter><wait>",
         # ext4
-        "3<enter>",
+        "3<wait><enter><wait>",
         # Boot options
-        "<enter>",
+        "<wait><enter><wait>",
         # Confirm
-        "y<enter>",
+        "y<wait><enter><wait>",
         # Wait for installation
-        "<wait30>",
+        "<wait60>",
         # Finish installation
-        "<enter>",
+        "<wait><enter><wait>",
         # Reboot
-        "sudo reboot<enter>",
-        "<wait30>",
+        "sudo reboot<wait><enter><wait>",
+        "<wait60>",
         # Install qemu
-        "tce-load -wi qemu<enter>",
+        "tce-load -wi qemu<wait><enter><wait>",
         "<wait60>",
         # Power off
-        "sudo poweroff<enter>",
+        "sudo poweroff<wait><enter><wait>",
     ]
     boot_key_interval = "50ms"
     boot_keygroup_interval = "2s"

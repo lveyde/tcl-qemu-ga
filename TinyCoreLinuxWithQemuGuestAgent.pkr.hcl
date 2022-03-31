@@ -12,23 +12,36 @@ source "qemu" "qemu" {
     headless = true
     communicator = "none"
     boot_command = [
-        "<enter><wait15>",
-        "tce-load -wi acpid<enter>",
-        "/usr/local/etc/init.d/acpid start<enter>",
+        # Boot prompt
+        "console=ttyS1,9600 console=tty0<enter><wait15>",
+        # Install installer
         "tce-load -wi tc-install<enter>",
+        # Start installer
         "sudo tc-install.sh<enter>",
         "<wait10>",
+        # Install from CD
         "c<wait2><enter><wait2>",
+        # Frugal
         "f<wait2><enter><wait2>",
+        # Whole disk
         "1<wait2><enter><wait2>",
+        # VDA
         "2<wait2><enter><wait2>",
+        # Bootloader
         "y<wait2><enter><wait2>",
+        # Extensions
         "<wait2><enter>",
+        # ext4
         "3<wait2><enter><wait2>",
-        "<wait2><enter><wait2>",
+        # Boot options
+        "console=ttyS1,9600 console=tty0<wait2><enter><wait2>",
+        # Confirm
         "y<wait2><enter>",
+        # Wait for installation
         "<wait30>",
+        # Finish installation
         "<enter>",
+        # Power off
         "sudo poweroff<enter>",
     ]
     boot_key_interval = "50ms"

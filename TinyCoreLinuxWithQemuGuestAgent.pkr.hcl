@@ -9,7 +9,7 @@ source "qemu" "qemu" {
     net_device = "virtio-net"
     disk_interface = "virtio"
     boot_wait = "500ms"
-    headless = false
+    headless = true
     communicator = "none"
     boot_command = [
         # Boot prompt

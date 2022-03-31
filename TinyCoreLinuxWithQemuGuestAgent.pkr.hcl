@@ -4,7 +4,7 @@ source "qemu" "qemu" {
     output_directory = "dist"
     disk_size = "50M"
     format = "qcow2"
-    accelerator = "kvm"
+    accelerator = "none"
     vm_name = "tinycore"
     net_device = "virtio-net"
     disk_interface = "virtio"

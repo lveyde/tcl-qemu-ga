@@ -46,7 +46,7 @@ source "qemu" "qemu" {
         "<wait30>",
         # Install qemu
         "tce-load -wi qemu<enter>",
-        "<wait10>",
+        "<wait60>",
         # Power off
         "sudo poweroff<enter>",
     ]

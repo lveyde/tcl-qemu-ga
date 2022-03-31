@@ -1,6 +1,6 @@
 source "qemu" "qemu" {
-    iso_url = "http://tinycorelinux.net/13.x/x86/release/Core-current.iso"
-    iso_checksum = "sha256:304555fe47d51745d0f0a163436547264a13f81890b355da76b2784290d7ee7b"
+    iso_url = "https://github.com/lveyde/ovirt-tinycore/releases/download/v13.3/oVirtTinyCore-13.3.iso"
+    iso_checksum = "sha256:8b04c68b42580b6490488e4769241348f363443a67f1f2574acdd06228810d00"
     output_directory = "dist"
     disk_size = "50M"
     format = "qcow2"

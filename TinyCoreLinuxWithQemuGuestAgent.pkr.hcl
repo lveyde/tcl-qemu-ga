@@ -9,11 +9,11 @@ source "qemu" "qemu" {
     net_device = "virtio-net"
     disk_interface = "virtio"
     boot_wait = "500ms"
-    headless = true
+    headless = false
     communicator = "none"
     boot_command = [
         # Boot prompt
-        "console=ttyS1,9600 console=tty0<enter><wait15>",
+        "<enter><wait15>",
         # Install installer
         "tce-load -wi tc-install<enter>",
         # Start installer
@@ -30,7 +30,7 @@ source "qemu" "qemu" {
         # Bootloader
         "y<wait2><enter><wait2>",
         # Extensions
-        "<wait2><enter>",
+        "qemu<wait2><enter>",
         # ext4
         "3<wait2><enter><wait2>",
         # Boot options

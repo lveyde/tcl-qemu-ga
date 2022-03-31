@@ -15,7 +15,7 @@ jobs:
           sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
           sudo apt-get update && sudo apt-get install packer
       - name: Install QEMU
-        run: sudo apt update && sudo apt install -y qemu-utils qemu qemu-kvm
+        run: sudo apt update && sudo apt install -y qemu-utils qemu qemu-kvm gocr
       - name: Run Packer
         run: PACKER_LOG=1 packer build .
       - name: Upload artifacts
@@ -25,3 +25,5 @@ jobs:
           if-no-files-found: error
           path: |
             dist/*.qcow2
+      - name: Run tests
+        run: ./test.sh

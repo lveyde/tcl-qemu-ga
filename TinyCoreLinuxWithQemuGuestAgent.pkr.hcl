@@ -20,27 +20,33 @@ source "qemu" "qemu" {
         "sudo tc-install.sh<enter>",
         "<wait10>",
         # Install from CD
-        "c<wait2><enter><wait2>",
+        "c<enter>",
         # Frugal
-        "f<wait2><enter><wait2>",
+        "f<enter><wait2>",
         # Whole disk
-        "1<wait2><enter><wait2>",
+        "1<enter>",
         # VDA
-        "2<wait2><enter><wait2>",
+        "2<enter>",
         # Bootloader
-        "y<wait2><enter><wait2>",
+        "y<enter>",
         # Extensions
-        "qemu<wait2><enter>",
+        "<enter>",
         # ext4
-        "3<wait2><enter><wait2>",
+        "3<enter>",
         # Boot options
-        "console=ttyS1,9600 console=tty0<wait2><enter><wait2>",
+        "<enter>",
         # Confirm
-        "y<wait2><enter>",
+        "y<enter>",
         # Wait for installation
         "<wait30>",
         # Finish installation
         "<enter>",
+        # Reboot
+        "sudo reboot<enter>",
+        "<wait30>",
+        # Install qemu
+        "tce-load -wi qemu<enter>",
+        "<wait10>",
         # Power off
         "sudo poweroff<enter>",
     ]

@@ -25,3 +25,19 @@ jobs:
           if-no-files-found: error
           path: |
             dist/*.qcow2
+      - name: Test image
+        run:
+          (
+            qemu-system-x86_64 \
+              -nographic \
+              -serial mon:stdio \
+              -drive file=dist/tinycore.qcow2,format=qcow2 \
+              -monitor telnet::2000,server,nowait >/tmp/qemu.log
+          ) &
+          sleep 10
+          echo 'screendump /tmp/screendump.ppm
+          quit' | nc localhost 2000 >/dev/null
+          sleep 1
+          echo -e "\033[2m"
+          cat /tmp/qemu.log
+          echo -e "\033[0m"

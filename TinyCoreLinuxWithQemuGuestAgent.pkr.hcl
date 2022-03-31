@@ -43,7 +43,7 @@ build {
     post-processor "shell-local" {
         inline = [
             "cd dist",
-            "qemu-img -c -O qcow2 tinycore tinycore.qcow2"
+            "qemu-img convert -c -O qcow2 tinycore tinycore.qcow2"
         ]
     }
 }

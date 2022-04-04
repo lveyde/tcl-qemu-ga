@@ -67,7 +67,10 @@ build {
         ]
     }
 
-    #post-processor "shell-local" {
-    #    script = "test.sh"
-    #}
+    post-processor "shell-local" {
+        inline = [
+            "cd dist",
+            "qemu-img convert -c -O qcow2 tinycore tinycore.qcow2"
+        ]
+    }
 }

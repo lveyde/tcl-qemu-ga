@@ -18,12 +18,14 @@ jobs:
         run: sudo apt update && sudo apt install -y qemu-utils qemu qemu-kvm gocr
       - name: Run Packer
         run: PACKER_LOG=1 packer build .
+      - name: Run tests
+        run: ./test.sh
       - name: Upload artifacts
+        if: always()
         uses: actions/upload-artifact@v2
         with:
           name: dist
           if-no-files-found: error
           path: |
             dist/*.qcow2
-      - name: Run tests
-        run: ./test.sh
+            tinycore.png

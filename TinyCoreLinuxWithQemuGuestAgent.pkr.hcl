@@ -15,7 +15,7 @@ source "qemu" "qemu" {
     ssh_password = "installation"
     shutdown_command = "sudo poweroff"
     boot_command = [
-        "<enter><wait15>",
+        "<enter><wait40>",
         "tce-load -wi openssh<enter>",
         "sudo cp /usr/local/etc/ssh/sshd_config.orig /usr/local/etc/ssh/sshd_config<enter>",
         "sudo /usr/local/etc/init.d/openssh start<enter>",

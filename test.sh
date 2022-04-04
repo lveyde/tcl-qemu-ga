@@ -66,7 +66,7 @@ log "⚙️ Starting VM with image..."
     -monitor telnet::2000,server,nowait >/tmp/qemu.log
 ) &
 
-sleep 30
+sleep 60
 echo 'screendump /tmp/screendump.ppm
 quit' | nc localhost 2000 >/dev/null
 sleep 1

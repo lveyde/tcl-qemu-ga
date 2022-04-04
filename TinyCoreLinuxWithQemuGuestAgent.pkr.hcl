@@ -63,7 +63,8 @@ build {
             "sudo mount /mnt/sr0",
             # Install!
             "sudo -E tc-install.sh",
-            "sleep 300"
+            "sync",
+            "sleep 10"
         ]
     }
 

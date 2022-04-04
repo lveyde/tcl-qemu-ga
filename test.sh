@@ -62,7 +62,7 @@ log "⚙️ Starting VM with image..."
   qemu-system-x86_64 \
     -nographic \
     -serial mon:stdio \
-    -drive file=$(pwd)/dist/tinycore,format=qcow2 \
+    -drive file=$(pwd)/dist/tinycore.qcow2,format=qcow2 \
     -monitor telnet::2000,server,nowait >/tmp/qemu.log
 ) &
 

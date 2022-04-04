@@ -2,53 +2,24 @@ source "qemu" "qemu" {
     iso_url = "http://tinycorelinux.net/13.x/x86/release/Core-current.iso"
     iso_checksum = "sha256:304555fe47d51745d0f0a163436547264a13f81890b355da76b2784290d7ee7b"
     output_directory = "dist"
-    disk_size = "50M"
+    disk_size = "100M"
     format = "qcow2"
     accelerator = "none"
     vm_name = "tinycore"
     net_device = "virtio-net"
     disk_interface = "virtio"
-    boot_wait = "500ms"
+    boot_wait = "10s"
     headless = true
-    communicator = "none"
+    communicator = "ssh"
+    ssh_username = "tc"
+    ssh_password = "installation"
+    shutdown_command = "sudo poweroff"
     boot_command = [
-        # Boot prompt
         "<enter><wait15>",
-        # Install installer
-        "tce-load -wi tc-install<enter>",
-        # Start installer
-        "sudo tc-install.sh<enter>",
-        "<wait30>",
-        # Install from CD
-        "c<wait><enter><wait>",
-        # Frugal
-        "f<wait><enter><wait>",
-        # Whole disk
-        "1<wait><enter><wait>",
-        # VDA
-        "2<wait><enter><wait>",
-        # Bootloader
-        "y<wait><enter><wait>",
-        # Extensions
-        "<wait><enter><wait>",
-        # ext4
-        "3<wait><enter><wait>",
-        # Boot options
-        "<wait><enter><wait>",
-        # Confirm
-        "y<wait><enter><wait>",
-        # Wait for installation
-        "<wait60>",
-        # Finish installation
-        "<wait><enter><wait>",
-        # Reboot
-        "sudo reboot<wait><enter><wait>",
-        "<wait60>",
-        # Install qemu
-        "tce-load -wi qemu<wait><enter><wait>",
-        "<wait60>",
-        # Power off
-        "sudo poweroff<wait><enter><wait>",
+        "tce-load -wi openssh<enter>",
+        "sudo cp /usr/local/etc/ssh/sshd_config.orig /usr/local/etc/ssh/sshd_config<enter>",
+        "sudo /usr/local/etc/init.d/openssh start<enter>",
+        "passwd <<EOF<enter>installation<enter>installation<enter>EOF<enter>",
     ]
     boot_key_interval = "50ms"
     boot_keygroup_interval = "2s"
@@ -59,10 +30,44 @@ build {
 
     sources = ["source.qemu.qemu"]
 
-    post-processor "shell-local" {
+    provisioner "shell" {
         inline = [
-            "cd dist",
-            "qemu-img convert -c -O qcow2 tinycore tinycore.qcow2"
+            "set -euo pipefail",
+            # Install the installer
+            "tce-load -wi syslinux",
+            "tce-load -wi tc-install",
+            # 64 bit installation
+            "export VMLINUZ=vmlinuz",
+            "export ROOTFS=core",
+            "export BUILD=x86",
+            "export TCE=tce32",
+            # Install from CD
+            "export FROM=c",
+            "export BOOT=/mnt/sr0/boot",
+            # Start installation without questions
+            "export INSTALL=i",
+            # Installation type
+            "export TYPE=frugal",
+            # Installation target
+            "export TARGET=vda",
+            "export DEVICE=vda",
+            "export FORMAT=ext3",
+            "export BOOTLOADER=yes",
+            # Set up path
+            "export PATH=/home/tc/.local/bin:/usr/local/sbin:/usr/local/bin:/apps/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+            # Optional extensions
+            "tce-load -wi qemu",
+            "export STANDALONEEXTENSIONS=/tmp/tce",
+            # Mount CD
+            "sudo mkdir -p /mnt/sr0",
+            "sudo mount /mnt/sr0",
+            # Install!
+            "sudo -E tc-install.sh",
+            "sleep 300"
         ]
     }
+
+    #post-processor "shell-local" {
+    #    script = "test.sh"
+    #}
 }
